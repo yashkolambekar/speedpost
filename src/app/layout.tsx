@@ -17,7 +17,7 @@ export default function RootLayout({
     <SessionWrapper>
       <html lang="en">
         <body className="w-full flex flex-col items-center">
-          <div className="w-full max-w-[1250px] relative min-h-[100dvh]">{children}</div>
+          <div className="w-full max-w-[1250px] relative min-h-[100dvh] p-4">{children}</div>
         </body>
       </html>
     </SessionWrapper>
