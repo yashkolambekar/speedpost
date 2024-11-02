@@ -9,3 +9,15 @@ body{
   color: white;
   font-family: "Raleway", sans-serif;
 }
+
+.dashtable{
+
+}
+
+.dashtable tbody tr td,
+.dashtable thead tr th{
+  @apply px-2 py-2;
+  border: 1px solid rgba(255,255,255,0.4);
+  min-width: 150px;
+  max-width: 300px;
+}
