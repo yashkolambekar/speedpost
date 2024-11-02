@@ -1,41 +1,27 @@
 "use client";
 
-import React, { useState } from 'react'
+import dashboardElementsAtom, {
+  dashboardElementsAtomType,
+} from "@/store/atoms/DashboardElements";
+import websiteAndFormListAtom from "@/store/atoms/WebsiteAndFormList";
+import React, { useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 function FormExplorer() {
-
-    const [selectedWebsiteIndex, setSelectedWebsiteIndex] = useState<number>(0);
+  const [selectedWebsiteIndex, setSelectedWebsiteIndex] = useState<number>(0);
   const [selectedFormIndex, setSelectedFormIndex] = useState<number>(0);
 
-  const tempWebsites = [
-    {
-      name: "TeleS3",
-      forms: [
-        {
-          name: "Enquiry",
-        },
-        {
-          name: "Contact",
-        },
-      ],
-    },
-    {
-      name: "IDOLCS",
-    },
-    {
-      name: "Dharma 4 Dharma",
-    },
-    {
-      name: "Ashreya Gurukul",
-    },
-    {
-      name: "Shreyas' Living Room",
-    },
-  ];
+  const tempWebsites = useRecoilValue(websiteAndFormListAtom);
 
+  const [visible, setVisible] = useRecoilState(dashboardElementsAtom);
+
+  if (!visible.FormExplorer) {
+    return <></>;
+  }
 
   return (
-    <div className="mt-10">
+    <>
+      <div className="">
         <div>
           <p className="font-semibold">Websites</p>
           <div className="flex gap-2 mt-2">
@@ -56,7 +42,24 @@ function FormExplorer() {
                 </div>
               );
             })}
-            <p className="p-1.5">Add Website</p>
+            <p
+              className="p-1.5 cursor-pointer"
+              onClick={() => {
+                let newDashboardElementsAtom: dashboardElementsAtomType = {
+                  ...visible,
+                };
+                Object.keys(visible).forEach((key, value) => {
+                  if (key == "FormExplorer") {
+                    newDashboardElementsAtom[key] = false;
+                  } else if (key == "NewWebsite") {
+                    newDashboardElementsAtom[key] = true;
+                  }
+                });
+                setVisible(newDashboardElementsAtom);
+              }}
+            >
+              Add Website
+            </p>
           </div>
         </div>
         <div className="mt-4">
@@ -285,7 +288,8 @@ function FormExplorer() {
           </div>
         </div>
       </div>
-  )
+    </>
+  );
 }
 
-export default FormExplorer
+export default FormExplorer;
